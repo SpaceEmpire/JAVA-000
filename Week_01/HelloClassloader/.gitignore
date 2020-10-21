@@ -1,0 +1,11 @@
+.settings
+target
+.project
+.vscode
+.classpath
+/bin/
+.idea
+*.iml
+logs
+.sts4-cache
+.factorypath
