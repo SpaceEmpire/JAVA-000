@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:school="http://liq.xml.com/school/schema/student"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                        http://liq.xml.com/school/schema/student http://liq.xml.com/school/schema/student.xsd">
+
+    <school:student id="stu" age="16" name="TOM"/>
+</beans>
