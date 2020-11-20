@@ -15,7 +15,7 @@ import java.sql.*;
 public class JdbcUtil {
 
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost:3306/test";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/test?useSSL=false&characterEncoding=utf8";
 
     static final String USER = "test";
 
@@ -29,6 +29,9 @@ public class JdbcUtil {
 //        }
 //    }
 
+    /**
+     * 创建DataSource是一个非常昂贵的操作，所以通常DataSource实例总是作为一个全局变量存储，并贯穿整个应用程序的生命周期。
+     */
     static DataSource ds = null;
 
     static {

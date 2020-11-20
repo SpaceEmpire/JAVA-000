@@ -2,7 +2,7 @@ package com.liq.service.impl;
 
 import com.liq.bean.Address;
 import com.liq.bean.Student;
-import com.liq.dao.JdbcUtil;
+import com.liq.dao.JdbcDataSource;
 import com.liq.service.StudentService;
 
 import java.sql.*;
@@ -16,6 +16,13 @@ import java.util.List;
  * version: 1.0
  */
 public class StudentServiceImpl implements StudentService {
+
+    private JdbcDataSource dataSource;
+
+    public StudentServiceImpl(JdbcDataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     @Override
     public List<Student> findByName(String name) {
         Connection conn = null;
@@ -23,7 +30,7 @@ public class StudentServiceImpl implements StudentService {
         ResultSet rs = null;
         List<Student> students = new ArrayList<Student>();
         try {
-            conn = JdbcUtil.getConnection();
+            conn = dataSource.getConnection();
             st = conn.createStatement();
             rs = st.executeQuery("select * from student where name=" + name);
             while (rs.next()) {
@@ -35,7 +42,7 @@ public class StudentServiceImpl implements StudentService {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            JdbcUtil.release(conn, st, rs);
+            dataSource.release(conn, st, rs);
         }
         return students;
     }
@@ -46,13 +53,13 @@ public class StudentServiceImpl implements StudentService {
         Statement st = null;
         Boolean result = false;
         try {
-            conn = JdbcUtil.getConnection();
+            conn = dataSource.getConnection();
             st = conn.createStatement();
             result = st.execute("insert into student(id,age,name) value(" + student.getId() + "," + student.getAge() + ",'" + student.getName() + "')");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            JdbcUtil.release(conn, st, null);
+            dataSource.release(conn, st, null);
         }
         return result;
     }
@@ -63,13 +70,13 @@ public class StudentServiceImpl implements StudentService {
         Statement st = null;
         Boolean result = false;
         try {
-            conn = JdbcUtil.getConnection();
+            conn = dataSource.getConnection();
             st = conn.createStatement();
             result = st.execute("delete from student where name='" + name + "'");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            JdbcUtil.release(conn, st, null);
+            dataSource.release(conn, st, null);
         }
         return result;
     }
@@ -80,13 +87,13 @@ public class StudentServiceImpl implements StudentService {
         Statement st = null;
         Boolean result = false;
         try {
-            conn = JdbcUtil.getConnection();
+            conn = dataSource.getConnection();
             st = conn.createStatement();
             result = st.execute("update student set age=" + student.getAge() + "  where name='" + student.getName() + "'");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            JdbcUtil.release(conn, st, null);
+            dataSource.release(conn, st, null);
         }
         return result;
     }
@@ -100,7 +107,7 @@ public class StudentServiceImpl implements StudentService {
         int result2 = 0;
         try {
             String stuSql = "insert into student(id,name,age) value (?,?,?)";
-            conn = JdbcUtil.getConnection();
+            conn = dataSource.getConnection();
             conn.setAutoCommit(false);
 
             pstmt = conn.prepareStatement(stuSql);
@@ -127,7 +134,7 @@ public class StudentServiceImpl implements StudentService {
                 e1.printStackTrace();
             }
         } finally {
-            JdbcUtil.release(conn, pstmt, null);
+            dataSource.release(conn, pstmt, null);
         }
 
         return (result1 + result2) == 2;

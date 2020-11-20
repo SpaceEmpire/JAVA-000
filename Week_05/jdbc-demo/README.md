@@ -6,3 +6,17 @@ Week05 作业题目（周六）：
 2）使用事务，PrepareStatement 方式，批处理方式，改进上述操作。
 3）配置 Hikari 连接池，改进上述操作。提交代码到 Github。
 ```
+
+#### JDBC最常用的资源有三类:
+
+* Connection: 数据库连接。
+* Statement: 会话声明。
+* ResultSet: 结果集游标。
+
+#### JDBC连接池的标准的接口javax.sql.DataSource
+
+* 1、C3P0
+* 2、DBCP
+* 3、Druid
+* 4、HikariCP
+

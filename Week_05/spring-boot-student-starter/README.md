@@ -44,3 +44,7 @@ public class WebAutoConfiguration {
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.xx.config.WebAutoConfiguration
 ```
+
+#### 条件化自动装配
+
+
