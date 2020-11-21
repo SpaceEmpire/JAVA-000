@@ -3,6 +3,7 @@ package com.liq;
 import com.liq.bean.Student;
 import com.liq.config.BeanConfig02;
 import com.liq.service.StudentService;
+import com.liq.service.impl.Student03ServiceImpl;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -17,7 +18,7 @@ public class getBeanTest03 {
 
         // 组件扫描方式注入bean
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(BeanConfig02.class);
-        StudentService studentService = applicationContext.getBean(StudentService.class);
+        StudentService studentService = applicationContext.getBean(Student03ServiceImpl.class);
 
         Student student = new Student();
         student.setName("tony");

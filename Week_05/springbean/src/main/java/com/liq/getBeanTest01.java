@@ -27,7 +27,7 @@ public class getBeanTest01 {
 //        students03Service.addOne(student);
 
         applicationContext = new ClassPathXmlApplicationContext("applicationContext02.xml");
-        StudentService studentService =(StudentService) applicationContext.getBean("studentsServiceImpl");
+        StudentService studentService =(StudentService) applicationContext.getBean("studentServiceImpl");
         studentService.addOne(new Student());
 
     }

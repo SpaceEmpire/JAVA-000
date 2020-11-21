@@ -10,19 +10,19 @@
         <property name="age" value="12"></property>
     </bean>
 
-    <bean id="students02Service" class="com.liq.service.impl.Student02ServiceImpl">
+    <bean id="student02Service" class="com.liq.service.impl.Student02ServiceImpl">
         <!-- 构造器方式注入bean -->
-        <constructor-arg name="studentsDao" ref="studentsDao"></constructor-arg>
+        <constructor-arg name="studentDao" ref="studentDao"></constructor-arg>
     </bean>
 
-    <bean id="students03Service" class="com.liq.service.impl.Student03ServiceImpl">
+    <bean id="student03Service" class="com.liq.service.impl.Student03ServiceImpl">
         <!-- set方法进行注入-->
-        <property name="studentDao" ref="studentsDao"></property>
+        <property name="studentDao" ref="studentDao"></property>
     </bean>
 
     <context:component-scan base-package="com.liq"></context:component-scan>
 
-    <bean id="studentsDao" class="com.liq.dao.StudentDao">
+    <bean id="studentDao" class="com.liq.dao.StudentDao">
 
     </bean>
 </beans>
