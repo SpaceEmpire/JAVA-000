@@ -37,6 +37,7 @@ public class bytebuddyTest {
 
     /**
      * 通过适配JDK的InvocationHandler实现方法的拦截
+     *
      * @return
      * @throws Exception
      */
@@ -59,11 +60,14 @@ public class bytebuddyTest {
 
     /**
      * 通过方法委托（MethodDelegation）的方式实现拦截器
+     *
      * @return
      * @throws Exception
      */
     private static StudentService createByteBuddyInterceptor() throws Exception {
+
         StudentAgentInterceptor stuIh = new StudentAgentInterceptor(new StudentServiceImpl());
+
         Object object = new ByteBuddy().subclass(Object.class)
                 .implement(StudentService.class)
                 .method(ElementMatchers.named("select"))
@@ -78,6 +82,7 @@ public class bytebuddyTest {
 
     /**
      * 通过代理类实现
+     *
      * @return
      * @throws Exception
      */

@@ -22,17 +22,16 @@ public class StudentAgentInterceptor {
     }
 
     /**
-     * @This 表示生成的代理对象
-     * @Origin 表示被代理的方法
-     * @AllArguments 表示方法参数
-     *
      * @param proxy
      * @param method
      * @param args
      * @return
      * @throws Exception
+     * @This 表示生成的代理对象
+     * @Origin 表示被代理的方法
+     * @AllArguments 表示方法参数
      */
-    public Object interceptor(@This Object proxy, @Origin Method method, @AllArguments Object args) throws Exception {
+    public Object interceptor(@This Object proxy, @Origin Method method, @AllArguments Object[] args) throws Exception {
         before();
         Object ret = method.invoke(delegate, args);
         after();

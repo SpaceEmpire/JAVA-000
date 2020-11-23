@@ -18,18 +18,17 @@ public class StudentProxy {
 
 
     /**
-     * @SuperMethod 表示父类的方法
-     *
      * @param proxy
      * @param method
      * @param superMethod
      * @param args
      * @return
      * @throws Exception
+     * @SuperMethod 表示父类的方法
      */
-    public Object interceptor(@This Object proxy, @Origin Method method, @SuperMethod Method superMethod, @AllArguments Object args) throws Exception {
+    public Object interceptor(@This Object proxy, @Origin Method method, @SuperMethod Method superMethod, @AllArguments Object[] args) throws Exception {
         before();
-        Object ret = method.invoke(proxy, args);
+        Object ret = superMethod.invoke(proxy, args);
         after();
         return ret;
     }
