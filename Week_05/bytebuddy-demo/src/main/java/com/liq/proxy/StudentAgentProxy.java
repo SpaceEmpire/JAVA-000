@@ -14,7 +14,7 @@ import java.util.Date;
  * date: 2020/11/23 17:01
  * version: 1.0
  */
-public class StudentProxy {
+public class StudentAgentProxy {
 
 
     /**

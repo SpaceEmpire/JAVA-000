@@ -1,8 +1,8 @@
-package com.liq;
+package com.liq.test;
 
 import com.liq.proxy.StudentAgentInterceptor;
 import com.liq.proxy.StudentInvocationHandler;
-import com.liq.proxy.StudentProxy;
+import com.liq.proxy.StudentAgentProxy;
 import com.liq.service.StudentService;
 import com.liq.service.impl.StudentServiceImpl;
 import net.bytebuddy.ByteBuddy;
@@ -17,22 +17,23 @@ import net.bytebuddy.matcher.ElementMatchers;
  * date: 2020/11/23 16:27
  * version: 1.0
  */
-public class bytebuddyTest {
+public class ByteBuddyTest {
 
     public static void main(String[] args) throws Exception {
         StudentService studentService = createByteBuddyHandler();
         studentService.select();
         System.out.println(studentService.toString());
 
-        // 没有起作用
+        // 没有起作用、跟方法返回值有关系
         studentService = createByteBuddyInterceptor();
-        studentService.select();
+        studentService.getCount();
         System.out.println(studentService.toString());
 
-        // 没有起作用
+        // 没有起作用、跟方法返回值有关系
         studentService = createByteBuddyProxy();
-        studentService.select();
+        studentService.getCount();
         System.out.println(studentService.toString());
+
     }
 
     /**
@@ -50,7 +51,7 @@ public class bytebuddyTest {
                 .method(ElementMatchers.named("select"))
                 .intercept(InvocationHandlerAdapter.of(stuIh))
                 .make()
-                .load(bytebuddyTest.class.getClassLoader())
+                .load(ByteBuddyTest.class.getClassLoader())
                 .getLoaded()
                 .getDeclaredConstructor()
                 .newInstance();
@@ -68,16 +69,15 @@ public class bytebuddyTest {
 
         StudentAgentInterceptor stuIh = new StudentAgentInterceptor(new StudentServiceImpl());
 
-        Object object = new ByteBuddy().subclass(Object.class)
+        return (StudentService) new ByteBuddy().subclass(Object.class)
                 .implement(StudentService.class)
-                .method(ElementMatchers.named("select"))
+                .method(ElementMatchers.named("getCount"))
                 .intercept(MethodDelegation.to(stuIh))
                 .make()
-                .load(bytebuddyTest.class.getClassLoader())
+                .load(ByteBuddyTest.class.getClassLoader())
                 .getLoaded()
                 .getDeclaredConstructor()
                 .newInstance();
-        return (StudentService) object;
     }
 
     /**
@@ -89,10 +89,10 @@ public class bytebuddyTest {
     private static StudentService createByteBuddyProxy() throws Exception {
         return (StudentService) new ByteBuddy().subclass(StudentServiceImpl.class)
                 .implement(StudentService.class)
-                .method(ElementMatchers.named("select"))
-                .intercept(MethodDelegation.to(new StudentProxy()))
+                .method(ElementMatchers.named("getCount"))
+                .intercept(MethodDelegation.to(new StudentAgentProxy()))
                 .make()
-                .load(bytebuddyTest.class.getClassLoader())
+                .load(ByteBuddyTest.class.getClassLoader())
                 .getLoaded()
                 .getDeclaredConstructor()
                 .newInstance();

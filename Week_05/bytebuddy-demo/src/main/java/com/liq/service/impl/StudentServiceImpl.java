@@ -13,8 +13,14 @@ public class StudentServiceImpl implements StudentService {
 
 
     @Override
-    public int select() {
+    public void select() {
         System.out.println("select ...");
+//        return 1;
+    }
+
+    @Override
+    public int getCount() {
+        System.out.println("getCount ...");
         return 1;
     }
 }

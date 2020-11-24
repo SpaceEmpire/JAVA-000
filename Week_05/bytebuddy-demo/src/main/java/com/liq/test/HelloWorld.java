@@ -1,4 +1,4 @@
-package com.liq;
+package com.liq.test;
 
 import com.apple.laf.AquaButtonBorder;
 import net.bytebuddy.ByteBuddy;
@@ -20,7 +20,7 @@ import java.lang.reflect.Type;
  * date: 2020/11/23 14:08
  * version: 1.0
  */
-public class helloworld {
+public class HelloWorld {
     public static void main(String[] args) throws IllegalAccessException, InstantiationException {
 
 
@@ -56,7 +56,7 @@ public class helloworld {
     private static void outputClass(byte[] bytes) {
         FileOutputStream out = null;
         try {
-//            String pathName = helloworld.class.getResource("/").getPath() + "ByteBuddyHelloWorld.class";
+//            String pathName = HelloWorld.class.getResource("/").getPath() + "ByteBuddyHelloWorld.class";
             String pathName = "./target/classes/HelloWrold.class";
             out = new FileOutputStream(new File(pathName));
             System.out.println("类输出路径：" + pathName);
