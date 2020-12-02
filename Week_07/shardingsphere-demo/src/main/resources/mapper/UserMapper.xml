@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liq.ssdemo.mapper.UserMapper">
+
+    <select id="findUserById" resultType="com.liq.ssdemo.bean.User">
+        select * from `user` where id = #{id}
+    </select>
+
+    <update id="updateUserById" parameterType="com.liq.ssdemo.bean.User">
+        update `user` set nickname = #{nickname} where id = #{id}
+    </update>
+</mapper>
