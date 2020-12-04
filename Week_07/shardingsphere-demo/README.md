@@ -53,6 +53,8 @@ spring.shardingsphere.props.sql.show=true
 
 ##### shardingsphere-jdbc-core-spring-boot-starter
 
+* application-test2.properties 配置
+
 ```
 <parent>
     <groupId>org.springframework.boot</groupId>
