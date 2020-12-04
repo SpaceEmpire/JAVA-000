@@ -54,6 +54,13 @@ spring.shardingsphere.props.sql.show=true
 ##### shardingsphere-jdbc-core-spring-boot-starter
 
 ```
+<parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>1.5.12.RELEASE</version>
+    <relativePath/> <!-- lookup parent from repository -->
+</parent>
+    
 <dependency>
     <groupId>org.apache.shardingsphere</groupId>
     <artifactId>shardingsphere-jdbc-core-spring-boot-starter</artifactId>
@@ -61,4 +68,30 @@ spring.shardingsphere.props.sql.show=true
 </dependency>
 ```
 
-暂时没有配置成功
+```
+spring.shardingsphere.datasource.names=primary_ds,replica_ds_0
+
+#主库
+spring.shardingsphere.datasource.primary_ds.type=com.zaxxer.hikari.HikariDataSource
+spring.shardingsphere.datasource.primary_ds.driver-class-name=com.mysql.jdbc.Driver
+spring.shardingsphere.datasource.primary_ds.jdbc-url=jdbc:mysql://localhost:3316/test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&maxReconnects=15000&allowMultiQueries=true&useSSL=false
+spring.shardingsphere.datasource.primary_ds.username=root
+spring.shardingsphere.datasource.primary_ds.password=123456
+
+#从库
+spring.shardingsphere.datasource.replica_ds_0.type=com.zaxxer.hikari.HikariDataSource
+spring.shardingsphere.datasource.replica_ds_0.driver-class-name=com.mysql.jdbc.Driver
+spring.shardingsphere.datasource.replica_ds_0.jdbc-url=jdbc:mysql://localhost:3326/test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&maxReconnects=15000&allowMultiQueries=true&useSSL=false
+spring.shardingsphere.datasource.replica_ds_0.username=root
+spring.shardingsphere.datasource.replica_ds_0.password=123456
+
+#负载均衡配置
+spring.shardingsphere.rules.replica-query.data-sources.pr-ds.primary-data-source-name=primary_ds
+spring.shardingsphere.rules.replica-query.data-sources.pr-ds.replica-data-source-names=replica_ds_0
+spring.shardingsphere.rules.replica-query.data-sources.pr-ds.load-balancer-name=round_robin
+spring.shardingsphere.rules.replica-query.load-balancers.round-robin.type=ROUND_ROBIN
+#负载均衡算法属性配置
+spring.shardingsphere.rules.replica-query.load-balancers.round-robin.props.workId=123456
+```
+
+spring-boot 2.0 以上版本，暂时没有配置成功
