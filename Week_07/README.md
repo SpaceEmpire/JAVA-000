@@ -68,6 +68,52 @@ redo log：重做日志（保证事物提交的一致性）
 覆盖索引、联合索引、索引下推 (https://www.cnblogs.com/Leo_wl/p/13093705.html)
 
 
+##### SQL 性能与优化
+
+```
+// 查看表结构
+show columns from test;
+
+// 查看表创建语句
+show create table test;
+
+```
+
+* mysql 执行流程
+
+* mysql 执行引擎和状态
+
+* mysql 对sql的执行顺序
+
+```
+1、from
+2、on
+3、join
+4、where
+5、group by
+6、having + 聚合函数
+7、select (获取哪些列)
+8、order by
+9、limit 
+```
+
+* mysql 索引原理
+
+```
+innoDB 使用B+树实现聚集索引
+
+bigint： 8字节
+指针：6字节
+
+主机一共占：14字节
+一页在mysql默认大小是：16k
+
+16k * 1024 / 14b = 1170
+
+高度2的b+树有16个块：16*1170=18724条数据
+```
+
+
 ##### Mysql 配置优化
 
 推荐书籍：mysql技术内幕、数据库系统全书、数据密集型应用系统设计

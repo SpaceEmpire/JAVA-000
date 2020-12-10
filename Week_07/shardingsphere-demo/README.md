@@ -96,4 +96,45 @@ spring.shardingsphere.rules.replica-query.load-balancers.round-robin.type=ROUND_
 spring.shardingsphere.rules.replica-query.load-balancers.round-robin.props.workId=123456
 ```
 
-spring-boot 2.0 以上版本，暂时没有配置成功
+spring-boot 2.0 以上版本，+  shardingsphere-jdbc-core-spring-boot-starter(5.0.0-alpha)
+
+参考：[Caused by: java.util.NoSuchElementException: No value bound](https://github.com/apache/shardingsphere/issues/8299)
+
+* application-test2.properties 配置
+
+```
+spring.shardingsphere.datasource.names=primary-ds,replica-ds-0
+
+spring.shardingsphere.datasource.common.type=com.zaxxer.hikari.HikariDataSource
+spring.shardingsphere.datasource.common.driver-class-name=com.mysql.jdbc.Driver
+spring.shardingsphere.datasource.common.username=root
+spring.shardingsphere.datasource.common.password= 123456
+
+#主库
+spring.shardingsphere.datasource.primary-ds.jdbc-url=jdbc:mysql://localhost:3316/test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&maxReconnects=15000&allowMultiQueries=true&useSSL=false
+#从库
+spring.shardingsphere.datasource.replica-ds-0.jdbc-url=jdbc:mysql://localhost:3326/test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&maxReconnects=15000&allowMultiQueries=true&useSSL=false
+
+#负载均衡配置
+spring.shardingsphere.rules.replica-query.data-sources.pr-ds.primary-data-source-name=primary-ds
+spring.shardingsphere.rules.replica-query.data-sources.pr-ds.replica-data-source-names=replica-ds-0
+spring.shardingsphere.rules.replica-query.data-sources.pr-ds.load-balancer-name=round_robin
+spring.shardingsphere.rules.replica-query.load-balancers.round-robin.type=ROUND_ROBIN
+#负载均衡算法属性配置
+spring.shardingsphere.rules.replica-query.load-balancers.round-robin.props.workId=123
+spring.shardingsphere.props.sql.show=true
+
+#配置数据源信息
+#spring.datasource.url=jdbc:mysql://localhost:3316/test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&maxReconnects=15000&allowMultiQueries=true&useSSL=false
+#spring.datasource.username=root
+#spring.datasource.password=123456
+#spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+#spring.datasource.type=com.zaxxer.hikari.HikariDataSource
+#spring.datasource.type=com.alibaba.druid.pool.DruidDataSource
+
+#Mybatis
+mybatis.type-aliases-package=com.liq.ssdemo.bean
+mybatis.mapper-locations=classpath:mapper/*.xml
+mybatis.configuration.map-underscore-to-camel-case=true
+
+```
