@@ -98,7 +98,7 @@ spring.shardingsphere.rules.replica-query.load-balancers.round-robin.props.workI
 
 spring-boot 2.0 以上版本，+  shardingsphere-jdbc-core-spring-boot-starter(5.0.0-alpha)
 
-参考：[Caused by: java.util.NoSuchElementException: No value bound](https://github.com/apache/shardingsphere/issues/8299)
+参考：[issues/8299，Caused by: java.util.NoSuchElementException: No value bound](https://github.com/apache/shardingsphere/issues/8299)
 
 * application-test2.properties 配置
 
