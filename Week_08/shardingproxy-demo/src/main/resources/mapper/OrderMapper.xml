@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liq.shardingproxydemo.mapper.OrderMapper">
+
+    <resultMap id="orderList" type="com.liq.shardingproxydemo.bean.Order">
+        <id column="order_id" property="orderId" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="amount" property="amount" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="INTEGER"/>
+        <result column="update_time" property="updateTime" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="findByOrderId" resultMap="orderList" parameterType="long">
+        select * from t_order where order_id = #{orderId}
+    </select>
+
+    <update id="updateOrderId" parameterType="com.liq.shardingproxydemo.bean.Order">
+        update t_order set `status`=#{status},update_time=unix_timestamp(now())
+        where order_id=#{orderId}
+    </update>
+
+    <delete id="deleteByOrderId" parameterType="integer">
+        delete from t_order where order_id=#{orderId}
+    </delete>
+
+    <insert id="addOne" parameterType="com.liq.shardingproxydemo.bean.Order">
+        insert into t_order(`user_id`,`amount`,`status`,`create_time`)
+        values (#{userId},#{amount},#{status},unix_timestamp(now()))
+    </insert>
+</mapper>
