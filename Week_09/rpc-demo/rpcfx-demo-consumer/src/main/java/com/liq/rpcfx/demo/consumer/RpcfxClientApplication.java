@@ -1,6 +1,5 @@
 package com.liq.rpcfx.demo.consumer;
 
-import com.alibaba.fastjson.JSON;
 import com.liq.rpcfx.client.Rpcfx;
 import com.liq.rpcfx.client.RpcfxCglib;
 import com.liq.rpcfx.demo.api.Order;

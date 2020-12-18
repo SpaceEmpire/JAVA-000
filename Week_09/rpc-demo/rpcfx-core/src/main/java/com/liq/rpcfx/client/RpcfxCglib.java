@@ -4,6 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.liq.rpcfx.api.RpcfxRequest;
 import com.liq.rpcfx.api.RpcfxResponse;
+import com.liq.rpcfx.nettyclent.NettyHttpClient;
+import io.netty.handler.codec.http.HttpMethod;
+import io.netty.handler.codec.http.HttpRequest;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -14,10 +17,11 @@ import org.springframework.cglib.proxy.MethodProxy;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.net.URI;
 
 
 /**
- * RpcfxCglib
+ * cglib + nettyclient
  * author: liquan
  * date: 2020/12/17 00:05
  * version: 1.0
@@ -63,20 +67,19 @@ public final class RpcfxCglib {
             return JSON.parse(response.getResult().toString());
         }
 
-        private RpcfxResponse post(RpcfxRequest req, String url) throws IOException {
+        private RpcfxResponse post(RpcfxRequest req, String url) throws Exception {
             String reqJson = JSON.toJSONString(req);
             System.out.println("req json: " + reqJson);
 
-            // 1.可以复用client
-            // 2.尝试使用httpclient或者netty client
-            OkHttpClient client = new OkHttpClient();
-            final Request request = new Request.Builder()
-                    .url(url)
-                    .post(RequestBody.create(JSONTYPE, reqJson))
-                    .build();
-            String respJson = client.newCall(request).execute().body().string();
-            System.out.println("resp json: " + respJson);
-            return JSON.parseObject(respJson, RpcfxResponse.class);
+            NettyHttpClient client = new NettyHttpClient();
+            URI uri = URI.create(url);
+            HttpRequest httpRequest = client.createHttpRequest(uri, reqJson, HttpMethod.POST);
+            client.sendRequest(uri, httpRequest);
+            client.latch.await();
+            System.out.println(client.result);
+            client.workerGroup.shutdownGracefully();
+
+            return JSON.parseObject(client.result, RpcfxResponse.class);
         }
     }
 }
