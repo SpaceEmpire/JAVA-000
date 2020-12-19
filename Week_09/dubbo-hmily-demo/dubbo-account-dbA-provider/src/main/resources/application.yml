@@ -1,0 +1,32 @@
+server:
+  port: 8088
+  servlet:
+    context-path: /dubbo-account-dba-provider
+
+spring:
+  application:
+    name: dubbo-account-dba-provider
+  datasource:
+    driver-class-name:  com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf8
+    username: root
+    password:
+  main:
+    allow-bean-definition-overriding: true
+
+dubbo:
+  scan:
+    base-packages: io.kimmking.dubbo.dba.provider
+  protocol:
+    name: dubbo
+    port: 12345
+  registry:
+    address: zookeeper://localhost:2181
+  metadata-report:
+    address: zookeeper://localhost:2181
+
+mybatis:
+  type-aliases-package: io.kimmking.dubbo.demo.api.entity
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

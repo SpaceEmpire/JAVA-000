@@ -1,0 +1,21 @@
+server:
+  port: 8087
+  servlet:
+    context-path: /dubbo-demo-consumer
+
+spring:
+  application:
+    name: dubbo-demo-consumer
+  main:
+    allow-bean-definition-overriding: true
+
+dubbo:
+  scan:
+    base-packages: io.kimmking.dubbo.dbb.provider
+  protocol:
+    name: dubbo
+    port: 12347
+  registry:
+    address: zookeeper://localhost:2181
+  metadata-report:
+    address: zookeeper://localhost:2181

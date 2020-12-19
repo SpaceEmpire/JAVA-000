@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.kimmking.dubbo.dba.provider.mapper.AccountDollarMapper">
+
+    <resultMap id="accountDollarDTO" type="io.kimmking.dubbo.demo.api.entity.AccountDollarDTO">
+        <id column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <id column="balance" property="balance" jdbcType="INTEGER"/>
+        <id column="freeze_amount" property="freezeAmount" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <update id="freezeDollar" parameterType="io.kimmking.dubbo.demo.api.entity.AccountDollarDTO">
+        update account_dollar set balance = balance - #{amount},freeze_amount= freeze_amount + #{amount} ,update_time = now()
+        where user_id =#{userId} and  balance > 0
+    </update>
+
+    <!--增加-->
+    <update id="addDollar" parameterType="io.kimmking.dubbo.demo.api.entity.AccountDollarDTO">
+        update account_dollar set balance= balance + #{amount} where user_id =#{userId}
+    </update>
+
+    <!--释放-->
+    <update id="unfreeze" parameterType="io.kimmking.dubbo.demo.api.entity.AccountDollarDTO">
+        update account_dollar set freeze_amount= freeze_amount - #{amount}
+          where user_id =#{userId}  and freeze_amount >0
+    </update>
+
+    <!--取消冻结-->
+    <update id="cancel" parameterType="io.kimmking.dubbo.demo.api.entity.AccountDollarDTO">
+        update account_dollar set balance = balance + #{amount},
+          freeze_amount= freeze_amount -  #{amount}
+          where user_id =#{userId}  and freeze_amount >0
+    </update>
+
+    <select id="findByUserId" parameterType="string" resultMap="accountDollarDTO">
+        select * from account_dollar where user_id =#{userId}
+    </select>
+</mapper>
